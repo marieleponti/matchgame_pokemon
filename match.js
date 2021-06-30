@@ -4,7 +4,11 @@ let choices = [];
 let firstClick = -1;
 let secondClick = -1;
 let correct = 0;
-let attempts = 0;
+let correct1 = 0;
+let correct2 = 0;
+let attemps = 0;
+let attempts1 = 0;
+let attempts2 = 0;
 let timer = null; 
 let numMatches = 8;
 let clock = null;
@@ -26,15 +30,19 @@ document.addEventListener("DOMContentLoaded", () =>{
 function startGame(){
     choices = [];
     correct = 0;
+    correct1 = 0;
+    correct2 = 0;
     attempts = 0;
+    attempts1 = 0;
+    attempts2 = 0;
     seconds = 0;
     clearInterval(clock);
     document.getElementById("msg").innerHTML = "";
-    document.getElementById("score").innerHTML = "";
+    document.getElementById("score1").innerHTML = "";
     //shuffle cards
     shuffle(pics);
-    console.log(pics);
-    //choose 8 pictures, assign each twice
+    //console.log(pics);
+    //choose pictures, assign each twice
     let idx = 0;
     while (idx < numMatches){
         choices.push(pics[idx]);
@@ -54,10 +62,11 @@ function startGame(){
         myimage.addEventListener("click", checkMatch);
     }
     clock = setInterval(tick, 1000);
+    document.getElementById("turn").innerHTML = "Player 1's turn!";
 }
 
 function checkMatch(event){
-    console.log(event.target.id);
+    //console.log(event.target.id);
     let imgClicked = event.target;
     if (firstClick == -1){
         //save position of first image clicked
@@ -70,22 +79,40 @@ function checkMatch(event){
         secondClick = parseInt(imgClicked.id);
         imgClicked.src = 'pics/' + choices[secondClick];
         console.log("second click: " + secondClick);
-        document.getElementById("attempts").innerHTML = "Match attempts: " + attempts;
+        if (attempts % 2 != 0){
+            attempts1++;
+            document.getElementById("attempts1").innerHTML = "P1 flips: " + attempts1;
+        } else {
+            attempts2++;
+            document.getElementById("attempts2").innerHTML = "P2 flips: " + attempts2;
+        }
         //check for match
         if (choices[firstClick] == choices[secondClick]){
             document.getElementById("msg").innerHTML = "MATCH!";
             correct++;
+            if (attempts % 2 != 0){
+                correct1++;
+            } else {
+                correct2++;
+            }
             //check if game is over
             if (correct == numMatches){
-                document.getElementById("msg").innerHTML = "Game over! Congratulations! All matches found in " 
-                    + attempts + " moves."
+                if (correct1 > correct2){
+                    winnerMsg = "Player 1 has won the game!";
+                } else if (correct2 > correct1){
+                    winnerMsg = "Player 2 has won the game!";
+                } else {
+                    winnerMsg = "player 1 and player 2 have tied!";
+                }
+                document.getElementById("msg").innerHTML = winnerMsg;
                 document.getElementById("attempts").innerHTML = "";
                 clearInterval(clock);
             }
             //remove event listener once card is flipped.
             document.getElementById(firstClick.toString()).removeEventListener("click", checkMatch);
             document.getElementById(secondClick.toString()).removeEventListener("click", checkMatch);
-            document.getElementById("score").innerHTML = "Matches: " + correct;
+            document.getElementById("score1").innerHTML = "P1 matches: " + correct1;
+            document.getElementById("score2").innerHTML = "P2 matches: " + correct2;
             //reset for next try
             firstClick = -1;
             secondClick = -1;
@@ -94,6 +121,13 @@ function checkMatch(event){
             timer = setTimeout(togglePics, 1000);
             document.getElementById("msg").innerHTML = "TRY AGAIN."
         }
+        if (attempts % 2 != 0){
+            //player 1's turn is ending
+            nextTurn = 2;
+        } else {
+            nextTurn = 1;
+        }
+        document.getElementById("turn").innerHTML = "Player " + nextTurn +"'s turn!";
     }
 }
 
