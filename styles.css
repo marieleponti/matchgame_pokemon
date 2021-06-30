@@ -1,0 +1,30 @@
+body {
+    background-color: lightgoldenrodyellow;
+    font-family: cursive;
+}
+
+h1{
+    display: inline;
+}
+
+#main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+img{
+    border: 2px solid black;
+}
+
+button{
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    background-color:aliceblue;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline;
+}
