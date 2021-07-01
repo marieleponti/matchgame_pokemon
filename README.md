@@ -1,4 +1,8 @@
-Matching game designed for 2 player play written in javascript. 
+Matching game designed for 2 player play written in javascript.
+To demo, pull <pics> folder and all files from repo (index.html, match.js, and styles.css)
+to local directory. That is, in your local directory, download the directory <pics> as 
+well as index.html, match.js, and styles.css.
+Paste the local directory's path in your web browser to demo.
 
 ![/photo1](https://user-images.githubusercontent.com/54427603/124047695-bce6a300-d9e2-11eb-9cbe-6ae1218644cd.png)
 
