@@ -39,6 +39,10 @@ function startGame(){
     clearInterval(clock);
     document.getElementById("msg").innerHTML = "";
     document.getElementById("score1").innerHTML = "";
+    document.getElementById("score2").innerHTML = "";
+    document.getElementById("attempts").innerHTML = "";
+    document.getElementById("attempts1").innerHTML = "";
+    document.getElementById("attempts2").innerHTML = "";
     //shuffle cards
     shuffle(pics);
     //console.log(pics);
@@ -75,10 +79,6 @@ function checkMatch(event){
         console.log("first click: " + firstClick);
     } else if (secondClick == -1){
         attempts++;
-        //save position of second image clicked
-        secondClick = parseInt(imgClicked.id);
-        imgClicked.src = 'pics/' + choices[secondClick];
-        console.log("second click: " + secondClick);
         if (attempts % 2 != 0){
             attempts1++;
             document.getElementById("attempts1").innerHTML = "P1 flips: " + attempts1;
@@ -86,6 +86,10 @@ function checkMatch(event){
             attempts2++;
             document.getElementById("attempts2").innerHTML = "P2 flips: " + attempts2;
         }
+        //save position of second image clicked
+        secondClick = parseInt(imgClicked.id);
+        imgClicked.src = 'pics/' + choices[secondClick];
+        console.log("second click: " + secondClick);
         //check for match
         if (choices[firstClick] == choices[secondClick]){
             document.getElementById("msg").innerHTML = "MATCH!";
